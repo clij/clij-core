@@ -1,12 +1,10 @@
 package net.haesleinhuepf.clij.converters;
 
 import ij.ImagePlus;
-import javafx.util.Pair;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
 import net.haesleinhuepf.clij.converters.implementations.*;
 import net.imglib2.RandomAccessibleInterval;
-import org.scijava.plugin.PluginInfo;
 
 import java.util.HashMap;
 
@@ -22,13 +20,15 @@ public class FallBackCLIJConverterService extends CLIJConverterService {
         converterPlugins.put(new ClassPair(ImagePlus.class, ClearCLBuffer.class), new ImagePlusToClearCLBufferConverter());
         converterPlugins.put(new ClassPair(ImagePlus.class, ClearCLImage.class), new ImagePlusToClearCLImageConverter());
         converterPlugins.put(new ClassPair(ImagePlus.class, RandomAccessibleInterval.class), new ImagePlusToRandomAccessibleIntervalConverter());
+        converterPlugins.put(new ClassPair(NioBuffer.class, ClearCLBuffer.class), new NioToClearCLBufferConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ClearCLBuffer.class), new RandomAccessibleIntervalToClearCLBufferConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ClearCLImage.class), new RandomAccessibleIntervalToClearCLImageConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ImagePlus.class), new RandomAccessibleIntervalToImagePlusConverter());
     }
 
-    private HashMap<ClassPair, CLIJConverterPlugin> converterPlugins = new HashMap<>();
+    private final HashMap<ClassPair, CLIJConverterPlugin> converterPlugins = new HashMap<>();
 
+    @Override
     public <S, T> CLIJConverterPlugin<S, T> getConverter(Class<S> a, Class<T> b) {
         CLIJConverterPlugin<S, T> converter = getConverter(new ClassPair(a, b));
         if (converter == null) {
