@@ -740,6 +740,22 @@ public class CLIJOps {
         return Kernels.multiplyStackWithPlane(clij, input3d, input2d, output3d);
     }
 
+    public boolean log( ClearCLImage src,  ClearCLImage dst) {
+        return Kernels.log(clij, src, dst);
+    }
+
+    public boolean log( ClearCLBuffer src,  ClearCLBuffer dst) {
+        return Kernels.log(clij, src, dst);
+    }
+
+    public boolean exp( ClearCLImage src,  ClearCLImage dst) {
+        return Kernels.exp(clij, src, dst);
+    }
+
+    public boolean exp( ClearCLBuffer src,  ClearCLBuffer dst) {
+        return Kernels.exp(clij, src, dst);
+    }
+
     public boolean power( ClearCLImage src,  ClearCLImage dst,  Float exponent ) {
         return Kernels.power(clij, src, dst, exponent);
     }

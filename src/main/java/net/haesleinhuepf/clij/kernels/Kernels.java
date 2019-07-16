@@ -2441,6 +2441,50 @@ public class Kernels {
         return clij.execute(Kernels.class, "math.cl", "multiplyStackWithPlanePixelwise", parameters);
     }
 
+    public static boolean log(CLIJ clij, ClearCLImage src, ClearCLImage dst) {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("src", src);
+        parameters.put("dst", dst);
+        
+        return clij.execute(Kernels.class, "math.cl", "log_" + src.getDimension() + "d", parameters);
+    }
+
+    public static boolean log(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst) {
+        assertDifferent(src, dst);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("src", src);
+        parameters.put("dst", dst);
+
+        return clij.execute(Kernels.class, "math.cl", "log_" + src.getDimension() + "d", parameters);
+    }
+    
+    public static boolean exp(CLIJ clij, ClearCLImage src, ClearCLImage dst) {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("src", src);
+        parameters.put("dst", dst);
+        
+        // Note: Problems with GPU 'Intel(R) UHD Graphics 630'
+        // Test net.haesleinhuepf.clij.macro.modules.ExpTest.java 
+        //    failed on GPU 'Intel(R) UHD Graphics 630'
+        //    passed on GPU 'Geforce GTX 1060'
+        return clij.execute(Kernels.class, "math.cl", "exp_" + src.getDimension() + "d", parameters);
+    }
+
+    public static boolean exp(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst) {
+        assertDifferent(src, dst);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("src", src);
+        parameters.put("dst", dst);
+
+        // Note: Problems with GPU 'Intel(R) UHD Graphics 630'
+        // Test net.haesleinhuepf.clij.macro.modules.ExpTest.java 
+        //    failed on GPU 'Intel(R) UHD Graphics 630'
+        //    passed on GPU 'Geforce GTX 1060'
+        return clij.execute(Kernels.class, "math.cl", "exp_" + src.getDimension() + "d", parameters);
+    }
+
     public static boolean power(CLIJ clij, ClearCLImage src, ClearCLImage dst, Float exponent) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", src);
