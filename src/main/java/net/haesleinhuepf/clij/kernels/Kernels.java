@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij.utilities.AffineTransform;
 import net.haesleinhuepf.clij.utilities.CLKernelExecutor;
 import net.imglib2.Cursor;
 import net.imglib2.RandomAccessibleInterval;
+import net.imglib2.realtransform.AffineTransform2D;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.view.Views;
@@ -153,6 +154,62 @@ public class Kernels {
         return clij.execute(Kernels.class, "math.cl", "addWeightedPixelwise_" + src.getDimension() + "d", parameters);
     }
 
+    public static boolean affineTransform2D(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst, float[] matrix) {
+        assertDifferent(src, dst);
+
+        ClearCLBuffer matrixCl = clij.createCLBuffer(new long[]{matrix.length, 1, 1}, NativeTypeEnum.Float);
+
+        FloatBuffer buffer = FloatBuffer.wrap(matrix);
+        matrixCl.readFrom(buffer, true);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("input", src);
+        parameters.put("output", dst);
+        parameters.put("mat", matrixCl);
+
+        boolean result = clij.execute(Kernels.class, "affineTransforms_interpolate2D.cl", "affine_interpolate2D", parameters);
+
+        matrixCl.close();
+
+        return result;
+    }
+
+    public static boolean affineTransform2D(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst, AffineTransform2D at) {
+        assertDifferent(src, dst);
+
+        at = at.inverse();
+        float[] matrix = AffineTransform.matrixToFloatArray2D(at);
+        return affineTransform(clij, src, dst, matrix);
+    }
+
+    public static boolean affineTransform2D(CLIJ clij, ClearCLImage src, ClearCLImage dst, float[] matrix) {
+        assertDifferent(src, dst);
+
+        ClearCLBuffer matrixCl = clij.createCLBuffer(new long[]{matrix.length, 1, 1}, NativeTypeEnum.Float);
+
+        FloatBuffer buffer = FloatBuffer.wrap(matrix);
+        matrixCl.readFrom(buffer, true);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("input", src);
+        parameters.put("output", dst);
+        parameters.put("mat", matrixCl);
+
+        boolean result = clij.execute(Kernels.class, "affineTransforms_interpolate2D.cl", "affine_interpolate2D", parameters);
+
+        matrixCl.close();
+
+        return result;
+    }
+
+    public static boolean affineTransform2D(CLIJ clij, ClearCLImage src, ClearCLImage dst, AffineTransform2D at) {
+        assertDifferent(src, dst);
+
+        at = at.inverse();
+        float[] matrix = AffineTransform.matrixToFloatArray2D(at);
+        return affineTransform(clij, src, dst, matrix);
+    }
+
     public static boolean affineTransform(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst, float[] matrix) {
         assertDifferent(src, dst);
 
@@ -166,7 +223,7 @@ public class Kernels {
         parameters.put("output", dst);
         parameters.put("mat", matrixCl);
 
-        boolean result = clij.execute(Kernels.class, "affineTransforms.cl", "affine", parameters);
+        boolean result = clij.execute(Kernels.class, "affineTransforms_interpolate.cl", "affine_interpolate", parameters);
 
         matrixCl.close();
 

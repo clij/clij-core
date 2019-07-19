@@ -1,5 +1,6 @@
 package net.haesleinhuepf.clij.utilities;
 
+import net.imglib2.realtransform.AffineTransform2D;
 import net.imglib2.realtransform.AffineTransform3D;
 
 /**
@@ -19,4 +20,10 @@ public class AffineTransform {
         };
     }
 
+    public static float[] matrixToFloatArray2D(AffineTransform2D at) {
+        return new float[] {
+                (float) at.get(0,0), (float) at.get(0,1), (float) at.get(0,2),
+                (float) at.get(1,0), (float) at.get(1,1), (float) at.get(1,2),
+        };
+    }
 }
