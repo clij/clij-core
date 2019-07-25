@@ -144,7 +144,7 @@ public class CLKernelExecutor {
 
     public boolean enqueue(boolean waitToFinish) {
 
-
+        long time = System.nanoTime();
         if (CLIJ.debug) {
             System.out.println("Loading " + kernelName);
         }
@@ -252,8 +252,10 @@ public class CLKernelExecutor {
                 System.out.println(key + " = " + openCLDefines.get(key));
             }
         }
+        System.out.println("determine opencl defines" + (System.nanoTime() - time));
 
 
+        time = System.nanoTime();
 
         ClearCLKernel clearCLKernel = null;
 
@@ -269,6 +271,7 @@ public class CLKernelExecutor {
             e1.printStackTrace();
             return false;
         }
+        System.out.println("getting kernel" + (System.nanoTime() - time));
 
         if (clearCLKernel != null) {
             if (globalSizes != null) {
@@ -290,7 +293,9 @@ public class CLKernelExecutor {
             final ClearCLKernel kernel = clearCLKernel;
             double duration = ElapsedTime.measure("Pure kernel execution", () -> {
                 try {
+                    long time2 = System.nanoTime();
                     kernel.run(waitToFinish);
+                    System.out.println("execute kernel" + (System.nanoTime() - time2));
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -388,11 +393,12 @@ public class CLKernelExecutor {
     }
 
     protected ClearCLKernel getKernel(ClearCLContext context, String kernelName, Map<String, Object> defines) throws IOException {
-
+        long time = System.nanoTime();
         String programCacheKey = anchorClass.getCanonicalName() + " " + programFilename;
         for (String key : defines.keySet()) {
             programCacheKey = programCacheKey + " " + (key + " = " + defines.get(key));
         }
+        System.out.println("Build program cache key " + (System.nanoTime() - time));
         if (CLIJ.debug) {
             System.out.println("Program cache hash:" + programCacheKey);
         }
@@ -415,8 +421,10 @@ public class CLKernelExecutor {
                 }
             }
 
+            time = System.nanoTime();
             clProgram.addBuildOptionAllMathOpt();
             clProgram.buildAndLog();
+            System.out.println("buildandlog " + (System.nanoTime() - time));
             //System.out.println("status: " + mProgram.getBuildStatus());
             //System.out.println("LOG: " + this.mProgram.getBuildLog());
 
@@ -425,9 +433,11 @@ public class CLKernelExecutor {
         //System.out.println(clProgram.getSourceCode());
         //System.out.println(pKernelName);
 
-
+        time = System.nanoTime();
         try {
-            return clProgram.createKernel(kernelName);
+            ClearCLKernel result = clProgram.createKernel(kernelName);
+            System.out.println("Create kernel " + (System.nanoTime() - time));
+            return result;
         } catch (OpenCLException e) {
             System.out.println("Error when trying to create kernel " + kernelName);
             e.printStackTrace();

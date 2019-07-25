@@ -105,6 +105,7 @@ public class Kernels {
 
 
     public static boolean addImageAndScalar(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst, Float scalar) {
+        long time = System.nanoTime();
         assertDifferent(src, dst);
 
         HashMap<String, Object> parameters = new HashMap<>();
@@ -115,7 +116,7 @@ public class Kernels {
         if (!checkDimensions(src.getDimension(), dst.getDimension())) {
             throw new IllegalArgumentException("Error: number of dimensions don't match! (addImageAndScalar)");
         }
-
+        System.out.println("build paramerter hashmap" + (System.nanoTime() - time));
         return clij.execute(Kernels.class, "math.cl", "addScalar_" + src.getDimension() + "d", parameters);
     }
 

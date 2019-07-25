@@ -1,0 +1,113 @@
+With the modifications of this branch, JMH outputs this:
+
+C:\structure\code\clij-benchmarking-jmh>java -jar target/benchmarks3.jar AddScalar2D -rf csv
+# JMH version: 1.21
+# VM version: JDK 1.8.0_202, Java HotSpot(TM) 64-Bit Server VM, 25.202-b08
+# VM invoker: C:\Program Files\Java\jre1.8.0_202\bin\java.exe
+# VM options: -server -Xms4G -Xmx4G
+# Warmup: 10 iterations, 1 s each
+# Measurement: 10 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: net.haesleinhuepf.clij.benchmark.jmh.AddScalar2D.clij
+# Parameters: (size = 4096)
+
+# Run progress: 0.00% complete, ETA 00:01:00
+# Fork: 1 of 1
+# Warmup Iteration   1: build paramerter hashmap250000
+init type fixer379200
+determine opencl defines13274900
+Build program cache key 137500
+buildandlog 330696800
+Create kernel 8343900
+getting kernel341046000
+execute kernel11001200
+build paramerter hashmap9000
+init type fixer23900
+determine opencl defines136200
+Build program cache key 166600
+Create kernel 1794700
+getting kernel2261600
+execute kernel4706400
+191755300.000 ns/op
+# Warmup Iteration   2: build paramerter hashmap10200
+init type fixer11800
+determine opencl defines171500
+Build program cache key 104400
+Create kernel 1828500
+getting kernel2291300
+execute kernel5642800
+build paramerter hashmap8800
+init type fixer12200
+determine opencl defines114500
+Build program cache key 94700
+Create kernel 3201900
+getting kernel3677900
+execute kernel4699100
+build paramerter hashmap8400
+init type fixer12400
+determine opencl defines123800
+Build program cache key 114600
+Create kernel 1893200
+getting kernel2359700
+execute kernel4764300
+build paramerter hashmap10100
+init type fixer11700
+determine opencl defines154100
+Build program cache key 125300
+Create kernel 1312100
+getting kernel1751700
+execute kernel4501500
+build paramerter hashmap9300
+init type fixer12200
+determine opencl defines79500
+Build program cache key 187800
+Create kernel 1367800
+getting kernel1757900
+execute kernel4829900
+8301640.000 ns/op
+# Warmup Iteration   3: build paramerter hashmap10900
+init type fixer29500
+determine opencl defines140600
+Build program cache key 61700
+Create kernel 1792500
+getting kernel2156000
+execute kernel5525300
+build paramerter hashmap8300
+init type fixer27100
+determine opencl defines104300
+Build program cache key 62400
+Create kernel 1617400
+getting kernel2084600
+execute kernel4869100
+build paramerter hashmap9600
+init type fixer26100
+determine opencl defines98600
+Build program cache key 105400
+Create kernel 1414200
+getting kernel1699900
+execute kernel4716800
+build paramerter hashmap8400
+init type fixer9800
+determine opencl defines112800
+Build program cache key 43000
+Create kernel 1450600
+getting kernel1794000
+execute kernel5764400
+build paramerter hashmap8900
+init type fixer11400
+determine opencl defines80700
+Build program cache key 48300
+Create kernel 1382500
+getting kernel1673000
+execute kernel4489900
+build paramerter hashmap17400
+init type fixer13600
+determine opencl defines108600
+Build program cache key 87000
+Create kernel 1935000
+getting kernel2387400
+execute kernel4886900
+7997033.333 ns/op
+

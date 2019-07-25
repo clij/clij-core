@@ -225,8 +225,11 @@ public class CLIJ {
                            long[] pGlobalsizes,
                            Map<String, Object> pParameterMap) {
 
+        long time = System.nanoTime();
         TypeFixer inputTypeFixer = new TypeFixer(this, pParameterMap);
         inputTypeFixer.fix();
+        System.out.println("init type fixer" + (System.nanoTime() - time));
+
 
         final boolean[] result = new boolean[1];
 
