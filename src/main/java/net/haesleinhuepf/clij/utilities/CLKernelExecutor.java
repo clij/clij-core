@@ -34,6 +34,7 @@ public class CLKernelExecutor {
 
     private final HashMap<String, ClearCLProgram> programCacheMap = new HashMap();
     ClearCLProgram currentProgram = null;
+    private long[] localSizes = null;
 
     public CLKernelExecutor(ClearCLContext context,
                             Class anchorClass,
@@ -318,6 +319,9 @@ public class CLKernelExecutor {
             } else if (dstBuffer != null) {
                 clearCLKernel.setGlobalSizes(dstBuffer.getDimensions());
             }
+            if (localSizes != null) {
+                clearCLKernel.setLocalSizes(localSizes);
+            }
             if (parameterMap != null) {
                 for (String key : parameterMap.keySet()) {
                     clearCLKernel.setArgument(key, parameterMap.get(key));
@@ -423,6 +427,10 @@ public class CLKernelExecutor {
         this.globalSizes = globalSizes;
     }
 
+    public void setLocalSizes(long[] localSizes) {
+        this.localSizes = localSizes;
+    }
+
     protected ClearCLKernel getKernel(ClearCLContext context, String kernelName) throws IOException {
         return this.getKernel(context, kernelName, (Map) null);
     }
@@ -495,4 +503,5 @@ public class CLKernelExecutor {
 
         programCacheMap.clear();
     }
+
 }

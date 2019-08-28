@@ -227,6 +227,15 @@ public class CLIJ {
                            String pKernelname,
                            long[] pGlobalsizes,
                            Map<String, Object> pParameterMap) {
+        return execute(pAnchorClass,pProgramFilename, pKernelname, null, pGlobalsizes, pParameterMap);
+    }
+
+    public boolean execute(Class pAnchorClass,
+                String pProgramFilename,
+                String pKernelname,
+        long[] pLocalSizes,
+        long[] pGlobalsizes,
+        Map<String, Object> pParameterMap) {
 
         TypeFixer inputTypeFixer = new TypeFixer(this, pParameterMap);
         inputTypeFixer.fix();
@@ -262,6 +271,7 @@ public class CLIJ {
 
 
             mCLKernelExecutor.setParameterMap(pParameterMap);
+            mCLKernelExecutor.setLocalSizes(pLocalSizes);
             result[0] = mCLKernelExecutor.enqueue(true);
         });
 
