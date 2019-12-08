@@ -484,4 +484,34 @@ public class CLIJ {
         ImagePlus copy = new Duplicator().run(imp, imp.getC(), imp.getC(), 1, imp.getNSlices(), imp.getT(), imp.getT());
         return push(copy);
     }
+
+    private Boolean imageSupport = null;
+    public boolean hasImageSupport() {
+        if (getOpenCLVersion() < 1.2) {
+            return false;
+        } else {
+            if (imageSupport == null) {
+                imageSupport = getClearCLContext().getBackend().imageSupport(mClearCLDevice.getPeerPointer());
+            }
+            if (imageSupport) {
+                try {
+                    ClearCLImage image = createCLImage(new long[]{2, 2, 2}, ImageChannelDataType.Float);
+                    image.close();
+                    image = createCLImage(new long[]{2, 2, 2}, ImageChannelDataType.UnsignedInt8);
+                    image.close();
+                    image = createCLImage(new long[]{2, 2, 2}, ImageChannelDataType.UnsignedInt16);
+                    image.close();
+                    image = createCLImage(new long[]{2, 2}, ImageChannelDataType.Float);
+                    image.close();
+                    image = createCLImage(new long[]{2, 2}, ImageChannelDataType.UnsignedInt8);
+                    image.close();
+                    image = createCLImage(new long[]{2, 2}, ImageChannelDataType.UnsignedInt16);
+                    image.close();
+                } catch (Exception e) {
+                    imageSupport = false;
+                }
+            }
+            return imageSupport;
+        }
+    }
 }
