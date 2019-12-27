@@ -168,6 +168,12 @@ __kernel void erode_diamond_neighborhood_3d(DTYPE_IMAGE_IN_3D  src,
         value = READ_IMAGE_3D(src, sampler, (pos + (int4){0, 1, 0, 0})).x;
         if (value != 0) {
           value = READ_IMAGE_3D(src, sampler, (pos + (int4){0, -1, 0, 0})).x;
+          if (value != 0) {
+            value = READ_IMAGE_3D(src, sampler, (pos + (int4){0, 0, 1, 0})).x;
+            if (value != 0) {
+              value = READ_IMAGE_3D(src, sampler, (pos + (int4){0, 0, -1, 0})).x;
+            }
+          }
         }
       }
     }
