@@ -1530,7 +1530,7 @@ public class Kernels {
         return multiplyImageAndScalar(clij, input3d, output3d, -1f);
     }
 
-    public static boolean localThreshold(CLIJ clij, ClearCLImage src, ClearCLImage dst, ClearCLImage threshold) {
+    public static boolean localThreshold(CLIJ clij, ClearCLImage src, ClearCLImage threshold, ClearCLImage dst) {
         assertDifferent(src, dst);
         assertDifferent(threshold, dst);
 
@@ -1549,7 +1549,7 @@ public class Kernels {
     }
 
 
-    public static boolean localThreshold(CLIJ clij, ClearCLBuffer src, ClearCLBuffer dst, ClearCLBuffer threshold) {
+    public static boolean localThreshold(CLIJ clij, ClearCLBuffer src, ClearCLBuffer threshold, ClearCLBuffer dst) {
         assertDifferent(src, dst);
         assertDifferent(threshold, dst);
 
