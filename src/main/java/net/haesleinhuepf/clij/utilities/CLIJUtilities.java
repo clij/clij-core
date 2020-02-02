@@ -24,7 +24,13 @@ public class CLIJUtilities {
 
     public static String classToName(Class aClass) {
         String name = aClass.getSimpleName();
-        return "CLIJ_" + name.substring(0, 1).toLowerCase() + name.substring(1, name.length());
+        if (aClass.getPackage().toString().contains(".clij2.")) {
+            return "CLIJ2_" + name.substring(0, 1).toLowerCase() + name.substring(1, name.length());
+        } else if (aClass.getPackage().toString().contains(".clijx.")) {
+            return "CLIJx_" + name.substring(0, 1).toLowerCase() + name.substring(1, name.length());
+        } else {
+            return "CLIJ_" + name.substring(0, 1).toLowerCase() + name.substring(1, name.length());
+        }
     }
 
     public static void assertDifferent(Object src, Object dst) {
