@@ -404,6 +404,12 @@ public class CLIJ {
         return push(copy);
     }
 
+
+    public ClearCLBuffer pushCurrentSelection(ImagePlus imp) {
+        ImagePlus copy = new Duplicator().run(imp);
+        return push(copy);
+    }
+
     public ClearCLBuffer push(RandomAccessibleInterval rai) {
         return convert(rai, ClearCLBuffer.class);
     }
