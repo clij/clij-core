@@ -9,6 +9,12 @@ inline int copyNeighborhoodToArray(DTYPE_IMAGE_IN_2D src, DTYPE_OUT array[],
 
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     int count = 0;
 
@@ -33,6 +39,12 @@ inline int copyBoxNeighborhoodToArray(DTYPE_IMAGE_IN_2D src, DTYPE_OUT array[],
 
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     int count = 0;
 
@@ -53,6 +65,12 @@ inline int copySliceNeighborhoodToArray(DTYPE_IMAGE_IN_3D src, DTYPE_OUT array[]
 
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     int count = 0;
 
@@ -77,6 +95,12 @@ inline int copyBoxSliceNeighborhoodToArray(DTYPE_IMAGE_IN_3D src, DTYPE_OUT arra
 
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     int count = 0;
 
@@ -102,6 +126,15 @@ inline int copyVolumeNeighborhoodToArray(DTYPE_IMAGE_IN_3D src, DTYPE_OUT array[
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
     float cSquared = e.z * e.z;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
+    if (cSquared == 0) {
+        cSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         float xSquared = x * x;
@@ -136,6 +169,15 @@ inline int copyBoxVolumeNeighborhoodToArray(DTYPE_IMAGE_IN_3D src, DTYPE_OUT arr
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
     float cSquared = e.z * e.z;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
+    if (cSquared == 0) {
+        cSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         for (int y = -e.y; y <= e.y; y++) {
@@ -196,6 +238,12 @@ __kernel void mean_slicewise_image3d
 
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     DTYPE_OUT sum = 0;
     int count = 0;
@@ -264,6 +312,12 @@ __kernel void mean_image2d
 
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
   for (int x = -e.x; x <= e.x; x++) {
       float xSquared = x * x;
@@ -296,6 +350,15 @@ __kernel void mean_image3d
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
     float cSquared = e.z * e.z;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
+    if (cSquared == 0) {
+        cSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         float xSquared = x * x;
@@ -444,6 +507,12 @@ __kernel void minimum_slicewise_image3d
     DTYPE_OUT minimumValue = CONVERT_DTYPE_OUT(READ_IMAGE_3D(src,sampler,coord).x);
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         float xSquared = x * x;
@@ -477,6 +546,12 @@ __kernel void minimum_image2d
     DTYPE_OUT minimumValue = CONVERT_DTYPE_OUT(READ_IMAGE_2D(src,sampler,coord).x);
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     int count = 0;
 
@@ -544,6 +619,12 @@ __kernel void minimum_image3d
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
     float cSquared = e.z * e.z;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         float xSquared = x * x;
@@ -584,6 +665,12 @@ __kernel void maximum_slicewise_image3d
     DTYPE_OUT maximumValue = CONVERT_DTYPE_OUT(READ_IMAGE_3D(src,sampler,coord).x);
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         float xSquared = x * x;
@@ -616,6 +703,12 @@ __kernel void maximum_image2d
     DTYPE_OUT maximumValue = CONVERT_DTYPE_OUT(READ_IMAGE_2D(src,sampler,coord).x);
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
 
     int count = 0;
 
@@ -685,6 +778,15 @@ __kernel void maximum_image3d
     float aSquared = e.x * e.x;
     float bSquared = e.y * e.y;
     float cSquared = e.z * e.z;
+    if (aSquared == 0) {
+        aSquared = FLT_MIN;
+    }
+    if (bSquared == 0) {
+        bSquared = FLT_MIN;
+    }
+    if (cSquared == 0) {
+        cSquared = FLT_MIN;
+    }
 
     for (int x = -e.x; x <= e.x; x++) {
         float xSquared = x * x;
