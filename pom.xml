@@ -85,14 +85,10 @@
 		<package-name>net.haesleinhuepf</package-name>
 		<license.licenseName>bsd_3</license.licenseName>
 		<license.copyrightOwners>Robert Haase, MPI CBG</license.copyrightOwners>
-    <releaseProfiles>deploy-to-scijava</releaseProfiles>
 		<scijava.app.directory>C:/programs/fiji-win64/Fiji.app/</scijava.app.directory>
 		<!--<scijava.app.directory>/home/rhaase/programs/fiji/Fiji.app/</scijava.app.directory>-->
 		<clojure.version>1.9.0</clojure.version>
 		<jruby-core.version>9.1.17.0</jruby-core.version>
-
-		<!-- NB: Deploy releases to the SciJava Maven repository. -->
-		<releaseProfiles>deploy-to-scijava</releaseProfiles>
 	</properties>
 
 	<dependencies>
@@ -171,12 +167,4 @@
 			<url>http://dl.bintray.com/haesleinhuepf/clij</url>
 		</repository>
 	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>bintray-haesleinhuepf-snapshots</id>
-			<name>bintray-snapshots</name>
-			<url>https://api.bintray.com/maven/haesleinhuepf/clij/clij-core/;publish=1</url>
-		</repository>
-	</distributionManagement>
 </project>
