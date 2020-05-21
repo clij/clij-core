@@ -361,6 +361,7 @@ public class CLIJ {
         if (imp.getNChannels() > 1 && imp.getNSlices() == 1) {
             IJ.run(imp, "Properties...", "channels=1 slices=" + imp.getNChannels() + " frames=1 unit=pixel pixel_width=1.0000 pixel_height=1.0000 voxel_depth=1.0000");
         }
+        imp.changes = false;
         imp.show();
     }
 
