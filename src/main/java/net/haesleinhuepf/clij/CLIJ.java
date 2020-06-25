@@ -73,30 +73,36 @@ public class CLIJ {
 
     @Deprecated
     public CLIJ(int deviceIndex) {
-        if (mClearCL == null) {
-            ClearCLBackendInterface
-                    lClearCLBackend = new ClearCLBackendJOCL();
+        try {
 
-            mClearCL = new ClearCL(lClearCLBackend);
+            if (mClearCL == null) {
+                ClearCLBackendInterface
+                        lClearCLBackend = new ClearCLBackendJOCL();
 
-            allDevices = mClearCL.getAllDevices();
-        }
-        if (debug) {
-            for (int i = 0; i < allDevices.size(); i++) {
-                System.out.println(allDevices.get(i).getName());
+                mClearCL = new ClearCL(lClearCLBackend);
+
+                allDevices = mClearCL.getAllDevices();
             }
+            if (debug) {
+                for (int i = 0; i < allDevices.size(); i++) {
+                    System.out.println(allDevices.get(i).getName());
+                }
+            }
+
+            mClearCLDevice = allDevices.get(deviceIndex);
+            if (debug) {
+                System.out.println("Using OpenCL device: " + mClearCLDevice.getName());
+            }
+
+            mClearCLContext = mClearCLDevice.createContext();
+
+            resetStdErrForwarding();
+
+            clijOps = new CLIJOps(this);
+        } catch (Exception e) {
+            System.out.println(humanReadableErrorMessage(e.getMessage()));
+            throw(e);
         }
-
-        mClearCLDevice = allDevices.get(deviceIndex);
-        if (debug) {
-            System.out.println("Using OpenCL device: " + mClearCLDevice.getName());
-        }
-
-        mClearCLContext = mClearCLDevice.createContext();
-
-        resetStdErrForwarding();
-
-        clijOps = new CLIJOps(this);
     }
 
     /**
@@ -526,5 +532,31 @@ public class CLIJ {
             }
             return imageSupport;
         }
+    }
+
+    public String humanReadableErrorMessage(String error_message) {
+        StringBuilder newMessage = new StringBuilder();
+        newMessage.append("CLIJ Error: ");
+
+        if (error_message.contains("CL_INVALID_BUFFER_SIZE")) {
+            newMessage.append("Creating an image failed. This happens if the specified image size is too big or one dimension was 0.\n");
+            newMessage.append("Also check carefully if images created and loaded in advance had reasonable dimensions.\n");
+        } else if (error_message.contains("Unknown OpenCL error")) {
+            newMessage.append("An unknown OpenCL error occurred. Please check if recent drivers for your graphics hardware are installed.");
+        } else if (error_message.contains("CL_OUT_OF_RESOURCES") ||
+                error_message.contains("CL_OUT_OF_HOST_MEMORY") ||
+                error_message.contains("CL_MEM_OBJECT_ALLOCATION_FAILURE")
+        ) {
+            newMessage.append("Creating an image or kernel failed because your device ran out of memory. \n" +
+                    "You can check memory consumption in CLIJ2 by calling these methods from time to time and see which images live in memory at specific points in your workflow:");
+            newMessage.append("  Ext.CLIJ2_reportMemory(); // ImageJ Macro");
+            newMessage.append("  print(clij2.reportMemory()); // Java/groovy/jython" );
+        } else if (error_message.contains("CL_INVALID_PROGRAM_EXECUTABLE")) {
+            newMessage.append("An OpenCL program couldn't be run on your graphics hardware.\n" +
+                    "Please support the CLIJ2 developers by reporting this bug.\n" +
+                    "Therefore, submit the complete error message, the code snippet you were running and details about your graphics hardware.");
+        }
+        newMessage.append("For support please contact the CLIJ2 developers via the forum on https://image.sc or create an issue on https://github.com/clij/clij2/issues .\n");
+        return newMessage.toString();
     }
 }
