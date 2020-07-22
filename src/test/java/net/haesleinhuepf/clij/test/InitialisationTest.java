@@ -1,7 +1,6 @@
 package net.haesleinhuepf.clij.test;
 
 import net.haesleinhuepf.clij.CLIJ;
-import org.jruby.RubyProcess;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -4,7 +4,6 @@ import ij.IJ;
 import ij.ImagePlus;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
-import org.jruby.RubyProcess;
 import org.junit.Ignore;
 import org.junit.Test;
 
