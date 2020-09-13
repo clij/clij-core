@@ -5,7 +5,9 @@ import ij.ImagePlus;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
 import net.haesleinhuepf.clij.converters.implementations.*;
+import net.imagej.ImgPlus;
 import net.imglib2.RandomAccessibleInterval;
+import net.imglib2.img.Img;
 
 import java.util.HashMap;
 
@@ -22,9 +24,11 @@ public class FallBackCLIJConverterService extends CLIJConverterService {
         converterPlugins.put(new ClassPair(ClearCLImage.class, ImagePlus.class), new ClearCLImageToImagePlusConverter());
         converterPlugins.put(new ClassPair(ClearCLImage.class, RandomAccessibleInterval.class), new ClearCLImageToRandomAccessibleIntervalConverter());
         converterPlugins.put(new ClassPair(ImagePlus.class, ClearCLBuffer.class), new ImagePlusToClearCLBufferConverter());
+        converterPlugins.put(new ClassPair(CompositeImage.class, ClearCLBuffer.class), new ImagePlusToClearCLBufferConverter());
         converterPlugins.put(new ClassPair(ImagePlus.class, ClearCLImage.class), new ImagePlusToClearCLImageConverter());
         converterPlugins.put(new ClassPair(ImagePlus.class, RandomAccessibleInterval.class), new ImagePlusToRandomAccessibleIntervalConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ClearCLBuffer.class), new RandomAccessibleIntervalToClearCLBufferConverter());
+        converterPlugins.put(new ClassPair(Img.class, ClearCLBuffer.class), new RandomAccessibleIntervalToClearCLBufferConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ClearCLImage.class), new RandomAccessibleIntervalToClearCLImageConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ImagePlus.class), new RandomAccessibleIntervalToImagePlusConverter());
 
