@@ -1,5 +1,6 @@
 package net.haesleinhuepf.clij.converters;
 
+import ij.CompositeImage;
 import ij.ImagePlus;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
@@ -10,6 +11,9 @@ import java.util.HashMap;
 
 public class FallBackCLIJConverterService extends CLIJConverterService {
 
+    private static FallBackCLIJConverterService instance = null;
+
+    @Deprecated
     public FallBackCLIJConverterService() {
         converterPlugins.put(new ClassPair(ClearCLBuffer.class, ClearCLImage.class), new ClearCLBufferToClearCLImageConverter());
         converterPlugins.put(new ClassPair(ClearCLBuffer.class, ImagePlus.class), new ClearCLBufferToImagePlusConverter());
@@ -23,6 +27,10 @@ public class FallBackCLIJConverterService extends CLIJConverterService {
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ClearCLBuffer.class), new RandomAccessibleIntervalToClearCLBufferConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ClearCLImage.class), new RandomAccessibleIntervalToClearCLImageConverter());
         converterPlugins.put(new ClassPair(RandomAccessibleInterval.class, ImagePlus.class), new RandomAccessibleIntervalToImagePlusConverter());
+
+        if (instance == null) {
+            instance = this;
+        }
     }
 
     private HashMap<ClassPair, CLIJConverterPlugin> converterPlugins = new HashMap<>();
@@ -43,5 +51,16 @@ public class FallBackCLIJConverterService extends CLIJConverterService {
             }
         }
         return null;
+    }
+
+    public void addConverter(Class source, Class target, CLIJConverterPlugin plugin) {
+        converterPlugins.put(new ClassPair(source, target), plugin);
+    }
+
+    public static FallBackCLIJConverterService getInstance() {
+        if (instance == null) {
+            instance = new FallBackCLIJConverterService();
+        }
+        return instance;
     }
 }

@@ -467,7 +467,7 @@ public class CLIJ {
                     converterService = new Context(CLIJConverterService.class).service(CLIJConverterService.class);
                 }
             } catch (RuntimeException e) {
-                converterService = new FallBackCLIJConverterService();
+                converterService = FallBackCLIJConverterService.getInstance();
             }
             converterService.setCLIJ(this);
             CLIJConverterPlugin<S, T> converter = (CLIJConverterPlugin<S, T>) converterService.getConverter(source.getClass(), targetClass);
