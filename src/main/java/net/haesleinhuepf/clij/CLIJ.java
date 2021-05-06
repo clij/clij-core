@@ -555,7 +555,7 @@ public class CLIJ {
             newMessage.append("An OpenCL program couldn't be run on your graphics hardware.\n" +
                     "Please support the CLIJ2 developers by reporting this bug.\n");
         }
-        newMessage.append("For support please contact the CLIJ2 developers via the forum on https://image.sc or create an issue on https://github.com/clij/clij2/issues .\n");
+        newMessage.append("For support please contact the CLIJ2 developers via the forum on https://image.sc .\n");
         newMessage.append("Therefore, please report the complete error message, the code snippet or workflow you were running, an example image if possible and details about your graphics hardware.\n");
         return newMessage.toString();
     }
