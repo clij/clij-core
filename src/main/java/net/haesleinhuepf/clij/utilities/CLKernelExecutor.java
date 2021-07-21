@@ -69,6 +69,22 @@ public class CLKernelExecutor {
                         defines.put("DTYPE_IN", "int");
                         defines.put("CONVERT_DTYPE_IN(parameter)", "clij_convert_int_sat(parameter)");
                         break;
+                    case UnsignedInt16:
+                        defines.put("DTYPE_IN", "ushort");
+                        defines.put("CONVERT_DTYPE_IN(parameter)", "clij_convert_ushort_sat(parameter)");
+                        break;
+                    case SignedInt16:
+                        defines.put("DTYPE_IN", "short");
+                        defines.put("CONVERT_DTYPE_IN(parameter)", "clij_convert_short_sat(parameter)");
+                        break;
+                    case UnsignedInt32:
+                        defines.put("DTYPE_IN", "uint");
+                        defines.put("CONVERT_DTYPE_IN(parameter)", "clij_convert_uint_sat(parameter)");
+                        break;
+                    case Float:
+                        defines.put("DTYPE_IN", "float");
+                        defines.put("CONVERT_DTYPE_IN(parameter)", "clij_convert_float_sat(parameter)");
+                        break;
                     default: // UnsignedInt16, TODO: throw exception if different
                         defines.put("DTYPE_IN", "ushort");
                         defines.put("CONVERT_DTYPE_IN(parameter)", "clij_convert_ushort_sat(parameter)");
@@ -97,9 +113,25 @@ public class CLKernelExecutor {
                         defines.put("DTYPE_OUT", "char");
                         defines.put("CONVERT_DTYPE_OUT(parameter)", "clij_convert_char_sat(parameter)");
                         break;
+                    case UnsignedInt16:
+                        defines.put("DTYPE_OUT", "ushort");
+                        defines.put("CONVERT_DTYPE_OUT(parameter)", "clij_convert_ushort_sat(parameter)");
+                        break;
+                    case SignedInt16:
+                        defines.put("DTYPE_OUT", "short");
+                        defines.put("CONVERT_DTYPE_OUT(parameter)", "clij_convert_short_sat(parameter)");
+                        break;
                     case SignedInt32:
                         defines.put("DTYPE_OUT", "int");
                         defines.put("CONVERT_DTYPE_OUT(parameter)", "clij_convert_int_sat(parameter)");
+                        break;
+                    case UnsignedInt32:
+                        defines.put("DTYPE_OUT", "uint");
+                        defines.put("CONVERT_DTYPE_OUT(parameter)", "clij_convert_uint_sat(parameter)");
+                        break;
+                    case Float:
+                        defines.put("DTYPE_OUT", "float");
+                        defines.put("CONVERT_DTYPE_OUT(parameter)", "clij_convert_float_sat(parameter)");
                         break;
                     default: // UnsignedInt16, TODO: throw exception if different
                         defines.put("DTYPE_OUT", "ushort");
@@ -149,9 +181,18 @@ public class CLKernelExecutor {
             return "short";
         } else if (pDType == NativeTypeEnum.UnsignedShort) {
             return "ushort";
+        } else if (pDType == NativeTypeEnum.Int) {
+            return "int";
+        } else if (pDType == NativeTypeEnum.UnsignedInt) {
+            return "uint";
+        } else if (pDType == NativeTypeEnum.Long) {
+            return "long";
+        } else if (pDType == NativeTypeEnum.UnsignedLong) {
+            return "ulong";
         } else if (pDType == NativeTypeEnum.Float) {
             return "float";
         } else {
+            System.out.println("No type name available for " + pDType);
             return "";
         }
     }
@@ -162,15 +203,24 @@ public class CLKernelExecutor {
         } else if (pDType == NativeTypeEnum.UnsignedByte) {
             return "uc";
         } else if (pDType == NativeTypeEnum.Short) {
-            return "i";
+            return "s";
         } else if (pDType == NativeTypeEnum.UnsignedShort) {
+            return "us";
+        } else if (pDType == NativeTypeEnum.Int) {
+            return "i";
+        } else if (pDType == NativeTypeEnum.UnsignedInt) {
             return "ui";
+        } else if (pDType == NativeTypeEnum.Long) {
+            return "l";
+        } else if (pDType == NativeTypeEnum.UnsignedLong) {
+            return "ul";
         } else if (pDType == NativeTypeEnum.Float) {
             return "f";
         } else {
             return "";
         }
     }
+
 
     /**
      * Map of all parameters. It is recommended that input and output
