@@ -514,18 +514,48 @@ public class CLIJ {
             }
             if (imageSupport) {
                 try {
+                    Object tp = null;
                     ClearCLImage image = createCLImage(new long[]{2, 2, 2}, ImageChannelDataType.Float);
+                    tp = image.getPeerPointer();
                     image.close();
+                    if (tp == null){
+                        return false;
+                    }
+
                     image = createCLImage(new long[]{2, 2, 2}, ImageChannelDataType.UnsignedInt8);
+                    tp = image.getPeerPointer();
                     image.close();
+                    if (tp == null){
+                        return false;
+                    }
+
                     image = createCLImage(new long[]{2, 2, 2}, ImageChannelDataType.UnsignedInt16);
+                    tp = image.getPeerPointer();
                     image.close();
+                    if (tp == null){
+                        return false;
+                    }
+
                     image = createCLImage(new long[]{2, 2}, ImageChannelDataType.Float);
+                    tp = image.getPeerPointer();
                     image.close();
+                    if (tp == null){
+                        return false;
+                    }
+
                     image = createCLImage(new long[]{2, 2}, ImageChannelDataType.UnsignedInt8);
+                    tp = image.getPeerPointer();
                     image.close();
+                    if (tp == null){
+                        return false;
+                    }
+
                     image = createCLImage(new long[]{2, 2}, ImageChannelDataType.UnsignedInt16);
+                    tp = image.getPeerPointer();
                     image.close();
+                    if (tp == null){
+                        return false;
+                    }
                 } catch (Exception e) {
                     imageSupport = false;
                 }
