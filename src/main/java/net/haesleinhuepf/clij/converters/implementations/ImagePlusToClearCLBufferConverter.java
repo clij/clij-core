@@ -29,7 +29,7 @@ public class ImagePlusToClearCLBufferConverter extends AbstractCLIJConverter<Ima
     final int THIRD_DIMENSION_C = 2;
     final int THIRD_DIMENSION_NONE = -1;
 
-    final long SMALL_IMAGE_SIZE = Integer.MAX_VALUE;
+    final long SMALL_IMAGE_SIZE = 2048 * 2048;
 
     private void setThirdDimension(ImagePlus imp, int thirdDimension, int value) {
         if (thirdDimension == THIRD_DIMENSION_Z) {
@@ -84,7 +84,7 @@ public class ImagePlusToClearCLBufferConverter extends AbstractCLIJConverter<Ima
 
         int thirdDimensionBefore = getThirdDimension(source, thirdDimension);
 
-        if (numberOfPixels > SMALL_IMAGE_SIZE) {
+        if (numberOfPixelsPerSlice >= SMALL_IMAGE_SIZE) {
             return convertBigImage(source, dimensions, numberOfPixels, numberOfPixelsPerSlice, thirdDimension, thirdDimensionBefore);
         }
 

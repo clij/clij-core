@@ -26,7 +26,7 @@ import java.nio.ShortBuffer;
 @Plugin(type = CLIJConverterPlugin.class)
 public class ClearCLBufferToImagePlusConverter extends AbstractCLIJConverter<ClearCLBuffer, ImagePlus> {
 
-    final long SMALL_IMAGE_SIZE = Integer.MAX_VALUE;
+    final long SMALL_IMAGE_SIZE = 2048 * 2048;
 
     @Override
     public ImagePlus convert(ClearCLBuffer source) {
@@ -39,7 +39,7 @@ public class ClearCLBufferToImagePlusConverter extends AbstractCLIJConverter<Cle
 
         ImagePlus result = null;
 
-        if (numberOfPixels > SMALL_IMAGE_SIZE) {
+        if (numberOfPixelsPerPlane >= SMALL_IMAGE_SIZE) {
             result = convertBigImage(source, numberOfPixelsPerPlane, width, height, depth);
         } else {
             if (source.getNativeType() == NativeTypeEnum.UnsignedByte) {
